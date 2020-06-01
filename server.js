@@ -1,4 +1,5 @@
 const express = require('express');
+const database = require ('./database');
 
 const server = express();
 
@@ -10,18 +11,22 @@ const itens = [
     { item:'Torta de frango', valor: 40.00 , tamanho :'Grande'},
 ]
 
-server.get('/itens', function(request, response) {
-    response.json(itens);
+server.get('/', async function(request, response) {
+   const dados = await database.read();
+   return response.json(dados);
 })
 
-server.post('/itens', function(request, response) {
-    const {item, valor, tamanho} = request.body;
+server.post('/', async function(request, response) {
+
+    const item = request.body.item;
+    const valor = request.body.valor;
+    const tamanho = request.body.tamanho;
+    const result = await database.create(item, valor, tamanho);
    
-    itens.push({item, valor, tamanho});
-    response.status(204).send();
+    return response.status(204).send();
 })
 
-server.put('/itens/:id',function(request, response) {
+server.put('/:id',function(request, response) {
 
     const {id} = request.params;
     const {item, valor, tamanho} = request.body;
@@ -38,7 +43,7 @@ server.put('/itens/:id',function(request, response) {
     return response.status(204).send();
 })
 
-server.delete('/itens/:id', function(request, response){
+server.delete('/:id', function(request, response){
 
      const {id} = request.params;
 
