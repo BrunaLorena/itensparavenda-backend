@@ -13,7 +13,7 @@ const sqlCreate = `
    CREATE TABLE IF NOT EXISTS itensparavenda 
    (
       ID serial primary key,
-      item varchar (50) not null,
+      item varchar(50) not null,
       valor decimal not null,
       tamanho varchar (50) 
    )
@@ -29,7 +29,7 @@ pool.query(sqlCreate, function(error, result) {
 
 module.exports = {
 
-async create() {
+async create(item, valor, tamanho) {
     const sql = `INSERT INTO itensparavenda (item, valor, tamanho)
                     VALUES ('$1', $2, $3)`;
 
@@ -41,6 +41,6 @@ async read() {
     const sql = 'SELECT * FROM itensparavenda'
     const result = await pool.query(sql);
     return result.rows;
-}
+},
 
 }
