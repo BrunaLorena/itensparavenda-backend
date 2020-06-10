@@ -18,29 +18,44 @@ const sqlCreate = `
       tamanho varchar (50) 
    )
 `;
-/*
+
 pool.query(sqlCreate, function(error, result) {
     if(error)
      throw error
-
     console.log('Tabela criada com sucesso!');
 });
-*/
 
 module.exports = {
 
-async create(item, valor, tamanho) {
-    const sql = `INSERT INTO itensparavenda (item, valor, tamanho)
-                    VALUES ('$1', $2, $3)`;
+async insert(item, valor, tamanho) {
+    const sql = 'INSERT INTO itensparavenda (item, valor, tamanho) VALUES ($1, $2, $3)';
 
-    const result = await pool.query(sql,[item, valor, tamanho]);
+    const result = await pool.query(sql, [item, valor, tamanho]);
     return result.rowCount;
 },
 
-async read() {
+async select() {
     const sql = 'SELECT * FROM itensparavenda'
     const result = await pool.query(sql);
     return result.rows;
 },
+ async  delete(item){
+
+        const sql = `DELETE FROM itensparavenda WHERE item = $1`; 
+        const result = await pool.query(sql, [item]);
+        return result.rowCount;
+},
+
+async  update(item, valor, tamanho) {
+
+        const sql = `UPDATE itensparavenda
+        SET valor = $2, tamanho= $3
+        WHERE  item = $1`;
+        
+        console.log(item)
+     const result = await pool.query(sql, [item, valor, tamanho]);
+        return result.rowCount;
+ },
+
 
 }

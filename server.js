@@ -7,16 +7,9 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-/*
-const itens = [
-    { item:'Bolo de chocolate', valor: 20.00 , tamanho :'Médio'},
-    { item:'Bolo de limão', valor: 10.00 , tamanho :'Pequeno'},
-    { item:'Torta de frango', valor: 40.00 , tamanho :'Grande'},
-]
-*/
 
 server.get('/', async function(request, response) {
-   const dados = await database.read();
+   const dados = await database.select();
    return response.json(dados);
 })
 
