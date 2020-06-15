@@ -8,12 +8,12 @@ server.use(cors());
 server.use(express.json());
 
 
-server.get('/', async function(request, response) {
-   const dados = await database.select();
+server.get('/itens', async function(request, response) {
+   const dados = await database.read();
    return response.json(dados);
 })
 
-server.post('/', async function(request, response) {
+server.post('/itens', async function(request, response) {
 
     const item = request.body.item;
     const valor = request.body.valor;
@@ -23,13 +23,14 @@ server.post('/', async function(request, response) {
     return response.status(204).send();
 })
 
-server.put('/:id', async function(request, response) { 
+server.put('/itens/:id', async function(request, response) { 
     const id = request.params.id;
-    const result = await database.update(id);
+    const {item, valor, tamanho} = request.body;
+    const result = await database.update(item, valor, tamanho, id);
     return response.status(204).send();
 })
 
-server.delete('/:id', async function(request, response) { 
+server.delete('/itens/:id', async function(request, response) { 
     const id = request.params.id;
     const result = await database.delete(id);
     return response.status(200).send();
