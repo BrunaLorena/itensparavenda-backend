@@ -49,11 +49,10 @@ async delete(id){
     const result = await pool.query(sql, [id]);
     return result.rowCount;
 },   
-    /* 
     async () {  
     console.log(itensparavenda)
     const result = await pool.query(sql, [item, valor, tamanho]);
     return result.rowCount;
     }
-    */
+    
  }
