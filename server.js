@@ -26,7 +26,7 @@ server.post('/itens', async function(request, response) {
 server.put('/itens/:id', async function(request, response) { 
     const id = request.params.id;
     const {item, valor, tamanho} = request.body;
-    const result = await database.update(item, valor, tamanho, id);
+    const result = await database.update(id, item, valor, tamanho);
     return response.status(204).send();
 })
 

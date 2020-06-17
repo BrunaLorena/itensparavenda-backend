@@ -1,2 +1,2 @@
 const database = require ('./database')
-database.read('Bolo de limão', 20.00, 'Grande')
+database.update(4,'Bolo de limao', 20.00, 'Grande')
